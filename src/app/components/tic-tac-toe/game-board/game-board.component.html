@@ -1,0 +1,5 @@
+<div class="board-container flex-item">
+    @for (box of boxList; track $index) {
+        <app-game-box [boxItem]="box"></app-game-box>
+    }
+</div>

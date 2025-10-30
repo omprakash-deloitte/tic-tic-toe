@@ -1,0 +1,13 @@
+<div class="game-main-container flex-item">
+    <h1>Tic Tac Toe </h1>
+    <p>{{result}}</p>
+    @if(currentMark === "X" && result === ""){
+        <p>Player 1 turn ( X )</p>
+    }@else if(currentMark === "O" && result === ""){
+        <p>Player 2 turn ( O )</p>
+    }
+    <app-game-board></app-game-board>
+    @if(result !== ""){
+        <button (click)="resetGame()">Restart</button>
+    }
+</div>

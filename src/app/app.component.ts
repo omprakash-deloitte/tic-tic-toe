@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TicTacToeComponent } from './components/tic-tac-toe/tic-tac-toe.component';
 
 @Component({
   selector: 'app-root',
