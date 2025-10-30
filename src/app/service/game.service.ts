@@ -13,40 +13,50 @@ export class GameService {
     {
       id:1,
       text:"",
+      bgColor:""
     },
     {
       id:2,
       text:"",
+      bgColor:""
     },
     {
       id:3,
       text:"",
+      bgColor:""
     },
     {
       id:4,
       text:"",
+      bgColor:""
     },
     {
       id:5,
       text:"",
+      bgColor:""
     },
     {
       id:6,
       text:"",
+      bgColor:""
     },
     {
       id:7,
       text:"",
+      bgColor:""
     },
     {
       id:8,
       text:"",
+      bgColor:""
     },
     {
       id:9,
       text:"",
+      bgColor:""
     }
   ];
+  winBgColor = "#9cf885";
 
   boxListSubject =  new BehaviorSubject<IBoxList[]>(JSON.parse(JSON.stringify(this.boxList)));
   currentMarkingText = new BehaviorSubject<string>("X");
@@ -68,7 +78,6 @@ export class GameService {
         }
       }
     });
-    this.boxListSubject.next(newBoxList);
     this.checkGameStatus(newBoxList);
   }
 
@@ -93,6 +102,48 @@ export class GameService {
     const isFirstColO = newBoxList[0].text === "O" && newBoxList[3].text === "O" && newBoxList[6].text === "O";
     const isSecondColO = newBoxList[1].text === "O" && newBoxList[4].text === "O" && newBoxList[7].text === "O";
     const isThirdColO = newBoxList[2].text === "O" && newBoxList[5].text === "O" && newBoxList[8].text === "O";
+
+    // Set bg color for win mark
+    if(isFirstRowX || isFirstRowO){
+      newBoxList[0].bgColor = this.winBgColor;
+      newBoxList[1].bgColor = this.winBgColor;
+      newBoxList[2].bgColor = this.winBgColor;
+    }
+    if(isSecondRowX || isSecondRowO){
+      newBoxList[3].bgColor = this.winBgColor;
+      newBoxList[4].bgColor = this.winBgColor;
+      newBoxList[5].bgColor = this.winBgColor;
+    }
+    if(isThirdRowX || isThirdRowO){
+      newBoxList[6].bgColor = this.winBgColor;
+      newBoxList[7].bgColor = this.winBgColor;
+      newBoxList[8].bgColor = this.winBgColor;
+    }
+    if(isFirstColX || isFirstColO){
+      newBoxList[0].bgColor = this.winBgColor;
+      newBoxList[3].bgColor = this.winBgColor;
+      newBoxList[6].bgColor = this.winBgColor;
+    }
+    if(isSecondColX || isSecondColO){
+      newBoxList[1].bgColor = this.winBgColor;
+      newBoxList[4].bgColor = this.winBgColor;
+      newBoxList[7].bgColor = this.winBgColor;
+    }
+    if(isThirdColX || isThirdColO){
+      newBoxList[2].bgColor = this.winBgColor;
+      newBoxList[5].bgColor = this.winBgColor;
+      newBoxList[8].bgColor = this.winBgColor;
+    }
+    if(isLeftDiagX || isLeftDiagO){
+      newBoxList[0].bgColor = this.winBgColor;
+      newBoxList[4].bgColor = this.winBgColor;
+      newBoxList[8].bgColor = this.winBgColor;
+    }
+    if(isRightDiagX || isRightDiagO){
+      newBoxList[2].bgColor = this.winBgColor;
+      newBoxList[4].bgColor = this.winBgColor;
+      newBoxList[6].bgColor = this.winBgColor;
+    }
   
 
     if(isFirstRowX || isSecondRowX || isThirdRowX || isLeftDiagX || isRightDiagX || isFirstColX || isSecondColX || isThirdColX){
@@ -106,10 +157,13 @@ export class GameService {
     if(this.boxList.every((item)=> item.text !== "")){
       this.result.next("It's a draw !");
     }
+
+     this.boxListSubject.next(newBoxList);
   }
 
   resetGame(){
     this.boxListSubject.next(JSON.parse(JSON.stringify(this.boxList)));
     this.result.next("");
+    this.currentMarkingText.next("X")
   }
 }
